@@ -130,4 +130,5 @@ dmypy.json
 .pyre/
 
 # Testing files
-amazing_test.py
+testavimui.py
+something.py
