@@ -18,6 +18,7 @@ class Author(models.Model):
     author_id = models.AutoField(primary_key=True)
     first_name = models.CharField("First name", max_length=100)
     last_name = models.CharField("Last name", max_length=100)
+    description = models.TextField('Description', max_length=2000, default='')
 
     class Meta:
         ordering = ['last_name', 'first_name']
