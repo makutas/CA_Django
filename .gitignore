@@ -132,3 +132,5 @@ dmypy.json
 # Testing files
 testavimui.py
 something.py
+
+*media/
