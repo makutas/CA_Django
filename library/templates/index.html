@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <h1>Rajono biblioteka</h1>
-<p>Sveiki atvykę į knygų rojų!</p>
+
+{% if user.is_authenticated %}
+	<p>Sveiki atvyke {{user.username}} !</p>
+	<p>Čia jūs lankotės {{ number_of_visits }}-ą kartą.</p>
+{% else  %}
+	<p>Sveiki atvykę į knygų rojų!</p>
+{% endif %}
+
 <p>Šiuo metu turime:</p>
 <ul>
 	<li><strong>Knygų:</strong> {{ books }}</li>

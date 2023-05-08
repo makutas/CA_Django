@@ -30,14 +30,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # MY APPS
+    'library',
+    # DEFAULT APPS
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # MY APPS
-    'library',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Media folder settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'library/static/media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'servo_emailas@gmail.com'
+EMAIL_HOST_PASSWORD = 'fasdn72q8enq2'
