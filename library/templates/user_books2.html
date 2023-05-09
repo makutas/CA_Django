@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>"{{user.first_name}} {{user.last_name}}" taken books:</h1>
+
+{% if user_books %}
+	<ul>
+		{% for book in user_books %}
+			<li class="{% if book.is_overdue %}text-danger{% endif %}">
+				<a href="{% url 'book-detail' book.book.pk %}">{{book.book.title}}</a> Due back:({{ book.due_back }})
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% endblock %}

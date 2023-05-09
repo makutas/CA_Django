@@ -1,7 +1,9 @@
 from django.db import models
-import uuid
 from django_resized import ResizedImageField
-
+from django.contrib.auth.models import User
+import uuid
+from datetime import date
+from tinymce.models import HTMLField
 
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
@@ -19,7 +21,7 @@ class Author(models.Model):
     author_id = models.AutoField(primary_key=True)
     first_name = models.CharField("First name", max_length=100)
     last_name = models.CharField("Last name", max_length=100)
-    description = models.TextField('Description', max_length=2000, default='')
+    description = HTMLField()
 
     class Meta:
         ordering = ['last_name', 'first_name']
@@ -54,7 +56,7 @@ class BookInstance(models.Model):
     instance_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique book UUID code")
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     due_back = models.DateField("Available on:", null=True, blank=True)
-
+    reader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     LOAN_STATUS = (
         ('p', 'Processing'),
         ('t', 'Taken'),
@@ -63,6 +65,12 @@ class BookInstance(models.Model):
     )
 
     book_status = models.CharField(max_length=1, default='a', blank=True, choices=LOAN_STATUS, help_text='Book status')
+
+    @property
+    def is_overdue(self):
+        if date.today() > self.due_back:
+            return True
+        return False
 
     class Meta:
         ordering = ['due_back']

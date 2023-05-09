@@ -12,15 +12,12 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    # def available_on(self, obj):
-    #     return obj.due_back.strftime('%Y-%m-%d')
-
-    list_display = ('book', 'book_status', 'due_back')
+    list_display = ('book', 'book_status', 'due_back', 'reader')
 
     list_filter = ('book_status', 'due_back')
     fieldsets = (
         ('General', {'fields': ('instance_id', 'book')}),
-        ('Availability', {'fields': ('book_status', 'due_back')}),
+        ('Availability', {'fields': ('book_status', 'due_back', 'reader')}),
     )
     search_fields = ('instance_id', 'book__title')
 
