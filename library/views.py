@@ -3,6 +3,8 @@ from .models import Genre, Author, Book, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 class BookListView(generic.ListView):
@@ -55,3 +57,30 @@ def search(request):
     # Icontains nuo contains skiriasi tuo, kad icontains ignoruoja ar raidės didžiosios/mažosios.
     search_results = Book.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
     return render(request, 'search.html', {'books': search_results, 'query': query})
+
+
+# -----------------------------------------------USER BOOK VIEWS--------------------------------------------------------
+class UserBooksListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    template_name = 'user_books.html'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(reader=self.request.user).filter(book_status__exact='t').order_by('due_back')
+
+
+@login_required(login_url='login')
+def user_books(request):
+    user = request.user
+    try:
+        user_books = BookInstance.objects.filter(reader=request.user).filter(book_status__exact='t').order_by('due_back')
+    except BookInstance.DoesNotExist:
+        user_books = None
+
+    context = {
+        'user': user,
+        'user_books': user_books,
+    }
+
+    return render(request, 'user_books2.html', context)
+

@@ -10,5 +10,6 @@ urlpatterns = [
     path('books/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
     path('search/', views.search, name='search'),
     path('account/', include('django.contrib.auth.urls')),
-
+    path('my_books/', views.UserBooksListView.as_view(), name='my-books'),
+    path('my_books2/', views.user_books, name='my-books2'),
 ]
