@@ -5,6 +5,7 @@ import uuid
 from datetime import date
 from tinymce.models import HTMLField
 
+
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
     name = models.CharField('Name', max_length=100, help_text="Enter type of genre: ")
@@ -54,7 +55,7 @@ class Book(models.Model):
 
 class BookInstance(models.Model):
     instance_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique book UUID code")
-    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name="book_instances")
     due_back = models.DateField("Available on:", null=True, blank=True)
     reader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     LOAN_STATUS = (
@@ -79,3 +80,14 @@ class BookInstance(models.Model):
         return f"{self.book.title}"
 
 
+class BookReview(models.Model):
+    review_id = models.AutoField(primary_key=True)
+    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True, blank=True, related_name="reviews")
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField('Atsiliepimas', max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']
