@@ -17,7 +17,7 @@
   <div style="margin-left:20px;margin-top:20px">
     <h4>Kopijos:</h4>
 
-    {% for copy in book.bookinstance_set.all %}
+    {% for copy in book.book_instances.all %}
       <hr>
       <p class="{% if copy.book_status == 'a' %}text-success{% elif copy.book_status == 'm' %}text-danger{% else %}text-warning{% endif %}">
         {{ copy.get_book_status_display }}
@@ -28,4 +28,29 @@
       <p class="text-muted"><strong>Id:</strong> {{ copy.instance_id }}</p>
     {% endfor %}
   </div>
+
+  </br>
+
+  <h4>Atsiliepimai:</h4>
+  {% if book.reviews.all %}
+    {% for review in book.reviews.all %}
+      <hr>
+      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Knyga neturi atsiliepimų</p>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h4>Palikite atsiliepimą:</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.content }}</br>
+      <input type="submit" value="Išsaugoti">
+    </form>
+  </div>
+  {% endif %}
 {% endblock %}

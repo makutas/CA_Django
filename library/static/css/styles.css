@@ -14,3 +14,8 @@
     inline-size: 300px;
     overflow-wrap: break-word;
 }
+
+.nav-width {
+    object-fit: contain;
+}
+

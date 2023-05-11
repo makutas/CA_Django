@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import Author, Book, Genre, BookInstance, BookReview
 
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -22,7 +22,12 @@ class BookInstanceAdmin(admin.ModelAdmin):
     search_fields = ('instance_id', 'book__title')
 
 
+class BookReviewAdmin(admin.ModelAdmin):
+    list_display = ('book', 'date_created', 'reviewer', 'content')
+
+
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Genre)
 admin.site.register(BookInstance, BookInstanceAdmin)
+admin.site.register(BookReview, BookReviewAdmin)
