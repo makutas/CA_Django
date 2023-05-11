@@ -1,10 +1,14 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Genre, Author, Book, BookInstance
+from .models import Author, Book, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib.auth.forms import User
+from django.views.decorators.csrf import csrf_protect
+from django.contrib import messages
 
 
 class BookListView(generic.ListView):
@@ -57,6 +61,41 @@ def search(request):
     # Icontains nuo contains skiriasi tuo, kad icontains ignoruoja ar raidės didžiosios/mažosios.
     search_results = Book.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
     return render(request, 'search.html', {'books': search_results, 'query': query})
+
+
+@csrf_protect
+def register(request):
+    if request.method == "POST":
+        # Retrieve values from the form via POST request
+        username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        # Check if the original and repeated passwords match
+        if password != password2:
+            messages.error(request, 'Slaptažodžiai nesutampa!')
+            return redirect('register')
+
+        # Check if username is taken
+        if User.objects.filter(username=username).exists():
+            messages.error(request, f'Vartotojo vardas {username} užimtas!')
+            return redirect('register')
+
+        # Check if email is taken
+        if User.objects.filter(email=email).exists():
+            messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+            return redirect('register')
+
+        # If the checks are passed, we can create a new User
+        User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                 email=email, password=password)
+        messages.info(request, f'Vartotojas {username} užregistruotas!')
+        return redirect('login')
+
+    return render(request, 'registration/register.html')
 
 
 # -----------------------------------------------USER BOOK VIEWS--------------------------------------------------------
