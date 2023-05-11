@@ -41,4 +41,16 @@
   {% else %}
     <p>Knyga neturi atsiliepimų</p>
   {% endif %}
+
+  {% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h4>Palikite atsiliepimą:</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.content }}</br>
+      <input type="submit" value="Išsaugoti">
+    </form>
+  </div>
+  {% endif %}
 {% endblock %}
