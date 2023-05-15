@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # PLUGINS
+    'tinymce',
     # MY APPS
     'library',
     # DEFAULT APPS
@@ -39,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # PLUGINS
-    'tinymce',
 ]
 
 MIDDLEWARE = [

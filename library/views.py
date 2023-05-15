@@ -111,10 +111,17 @@ def register(request):
         # If the checks are passed, we can create a new User
         User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                                  email=email, password=password)
+
+
         messages.info(request, f'Vartotojas {username} užregistruotas!')
         return redirect('login')
 
     return render(request, 'registration/register.html')
+
+
+@login_required
+def profile(request):
+    return render(request, 'profile.html')
 
 
 # -----------------------------------------------USER BOOK VIEWS--------------------------------------------------------
