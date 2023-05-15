@@ -35,6 +35,7 @@
   {% if book.reviews.all %}
     {% for review in book.reviews.all %}
       <hr>
+      <img class="rounded-circle" style="width:55px;height:50px;" src="{{review.reviewer.profile.photo.url}}">
       <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
       <p>{{ review.content }}</p>
     {% endfor %}

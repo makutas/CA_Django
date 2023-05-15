@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 import uuid
 from datetime import date
 from tinymce.models import HTMLField
+from PIL import Image
 
 
 class Genre(models.Model):
@@ -91,3 +92,21 @@ class BookReview(models.Model):
         verbose_name = "Atsiliepimas"
         verbose_name_plural = 'Atsiliepimai'
         ordering = ['-date_created']
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    photo = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")
+
+    def __str__(self):
+        return f"{self.user.username} profilis"
+
+    def save(self, *args, **kwargs):
+        """Run the usual save function but also resize uploaded photo."""
+        super().save(*args, **kwargs)
+        img = Image.open(self.photo.path)
+        # if img.height > 300 or img.width > 300:
+        output_size = (300, 300)
+        img.thumbnail(output_size)
+        img.save(self.photo.path)
+
