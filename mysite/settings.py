@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'tinymce',
     # MY APPS
     'library',
+    'crispy_forms',
+    'crispy_bootstrap4',
     # DEFAULT APPS
     'django.contrib.admin',
     'django.contrib.auth',
@@ -142,6 +144,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -160,3 +164,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'servo_emailas@gmail.com'
 EMAIL_HOST_PASSWORD = 'fasdn72q8enq2'
+
