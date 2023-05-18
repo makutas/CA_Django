@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>My taken book:</h1>
+    <ul>
+    <img class="rounded-circle" src="{{user_taken_book.reader.profile.photo.url}}">
+    <li>
+        <strong class="{% if user_taken_book.is_overdue %}text-danger{% endif %}">Title: {{user_taken_book.book.title}}</strong>
+    </li>
+    <li>
+	    <strong>Due back:</strong> {{user_taken_book.due_back}}
+    </li>
+	</ul>
+{% endblock %}

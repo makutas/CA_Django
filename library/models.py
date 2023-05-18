@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_resized import ResizedImageField
 from django.contrib.auth.models import User
 import uuid
@@ -76,6 +77,11 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
+
+    #
+    # def get_absolute_url(self):
+    #     """Nurodo konkretaus aprašymo galinį adresą"""
+    #     return reverse('book-detail', args=[str(self.instance_id)])
 
     def __str__(self):
         return f"{self.book.title}"

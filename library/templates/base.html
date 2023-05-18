@@ -30,6 +30,7 @@
 							{% if user.is_authenticated %}
 								<li><a href="{% url 'my-books'%}">Mano paimtos knygos</a></li>
 								<li><a href="{% url 'my-books2'%}">Mano paimtos knygos2</a></li>
+								<li><a href="{% url 'create' %}?next=/library">New book</a></li>
 								<li><a href="{% url 'logout' %}?next=/library">Atsijungti</a></li>
 							{% else %}
 								<li><a href="{% url 'login' %}?next={{request.path}}">Prisijungti</a></li>
