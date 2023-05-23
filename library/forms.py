@@ -28,3 +28,21 @@ class CreateBookInstanceForm(forms.ModelForm):
     class Meta:
         model = BookInstance
         fields = ['book', 'due_back']
+
+        widgets = {
+            'due_back': forms.DateInput(
+                format='%Y-%m-%d',
+                attrs={
+                    'type': 'date',
+                }),
+            }
+
+
+class EditBookInstanceForm(forms.ModelForm):
+    class Meta:
+        model = BookInstance
+        fields = ['book', 'due_back', 'book_status']
+
+        widgets = {
+            'book': forms.HiddenInput,
+        }

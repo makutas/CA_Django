@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
-from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm
+from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm, CreateBookInstanceForm, EditBookInstanceForm
 from django.views.generic.edit import FormMixin
 
 
@@ -203,29 +203,23 @@ class UserBookCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
+@login_required(login_url='login')
 def create_new_book_instance(request):
-    """
-    1. Reikalinga forma su fieldais kuriuos norim editint
-    2. Pries darant save form mum reikia ideti useri (required nes yra FK)
-    3. Urls/template/ analogiskai kaip sitie tik +2 (create2)
-    4. Pasiziurekit get_or_create metoda prie to pacio (kai darai per query) sito nereiks cia
-    :param request:
-    :return:
-    """
-    # if request.method == 'POST':
-    #     form = SomeForm(data=request.POST)
-    #     if form.is_valid:
-    #         add_user = form.save(False)
-    #         add_user.reader = request.user
-    #         add_user.save()
-    # else:
-    #     form = SomeForm()
-    #
-    # context = {
-    #     'form': form
-    # }
-    # return render(request, 'some.html', context)
-    pass
+    if request.method == 'POST':
+        form = CreateBookInstanceForm(data=request.POST)
+        if form.is_valid:
+            add_user = form.save(False)
+            add_user.reader = request.user
+            add_user.book_status = 't'
+            add_user.save()
+            return redirect('/')
+    else:
+        form = CreateBookInstanceForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'create_new_book_instance2.html', context)
 
 
 # -------------------------------------------------UPDATE VIEW----------------------------------------------------------
@@ -244,8 +238,23 @@ class UserBookUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.Update
         return self.request.user == book_instance.reader
 
 
+@login_required(login_url='login')
 def update_book_instance(request, pk):
-    pass
+    book_instance = BookInstance.objects.get(instance_id=pk)
+    if request.method == 'POST':
+        form = EditBookInstanceForm(data=request.POST, instance=book_instance)
+        if form.is_valid():
+            change_form = form.save(False)
+            change_form.reader = book_instance.reader
+            change_form.save()
+            return redirect(f'/library/my_books2/{pk}')
+    else:
+        form = EditBookInstanceForm(instance=book_instance)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'update_book_instance2.html', context)
 
 
 # -------------------------------------------------DELETE VIEW----------------------------------------------------------
@@ -259,5 +268,15 @@ class UserBookDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.Delete
         return self.request.user == book_instance.reader
 
 
+@login_required(login_url='login')
 def delete_book_instance(request, pk):
-    pass
+    if request.method == 'POST':
+        user = request.user
+        try:
+            object_to_delete = BookInstance.objects.filter(pk=pk, reader=user)
+            object_to_delete.delete()
+            return redirect('/')  # Success url (su confiramtionu kad istrinta arba koks nors alertas su ajaxu)
+        except BookInstance.DoesNotExist():
+            return redirect('/')  # Negali trinti svetimu instansu!
+    else:
+        return redirect('/')
