@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm, CreateBookInstanceForm, EditBookInstanceForm
 from django.views.generic.edit import FormMixin
+from django.utils.translation import gettext as _
 
 
 class BookListView(generic.ListView):
@@ -95,24 +96,24 @@ def register(request):
 
         # Check if the original and repeated passwords match
         if password != password2:
-            messages.error(request, 'Slaptažodžiai nesutampa!')
+            messages.error(request, _('Password do not match!'))
             return redirect('register')
 
         # Check if username is taken
         if User.objects.filter(username=username).exists():
-            messages.error(request, f'Vartotojo vardas {username} užimtas!')
+            messages.error(request, _(f'Username "{username}" already taken!'))
             return redirect('register')
 
         # Check if email is taken
         if User.objects.filter(email=email).exists():
-            messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+            messages.error(request, _(f'Email "{email}" already taken!'))
             return redirect('register')
 
         # If the checks are passed, we can create a new User
         User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                                  email=email, password=password)
 
-        messages.info(request, f'Vartotojas {username} užregistruotas!')
+        messages.info(request, _(f'Username "{username}" successfully registered!'))
         return redirect('login')
 
     return render(request, 'registration/register.html')
@@ -126,7 +127,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.info(request, f"Profilis atnaujintas")
+            messages.info(request, _(f"Profile updated..."))
             return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)

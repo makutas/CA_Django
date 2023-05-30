@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 	    {% block title %}
-			<title>Biblioteka</title>
+			<title>Library</title>
 		{% endblock %}
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,7 @@
 	    {% load static %}
 	    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 	</head>
+	{% load i18n %}
 	<body>
 		<div class="container-fluid">
 			<div class="row">
@@ -24,23 +25,40 @@
 							</a>
 						{% endif %}
 						<ul class="sidebar-nav">
-							<li><a href="{% url 'index' %}">Pradžia</a></li>
-							<li><a href="{% url 'books' %}">Visos knygos</a></li>
-							<li><a href="{% url 'authors' %}">Visi autoriai</a></li>
+							<li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+							<li><a href="{% url 'books' %}">{% trans "Books" %}</a></li>
+							<li><a href="{% url 'authors' %}">{% trans "Authors" %}</a></li>
 							{% if user.is_authenticated %}
-								<li><a href="{% url 'my-books'%}">Mano paimtos knygos</a></li>
-								<li><a href="{% url 'my-books2'%}">Mano paimtos knygos2</a></li>
-								<li><a href="{% url 'create' %}?next=/library">New book</a></li>
-								<li><a href="{% url 'create2' %}?next=/library">New book2</a></li>
-								<li><a href="{% url 'logout' %}?next=/library">Atsijungti</a></li>
+								<li><a href="{% url 'my-books'%}">{% trans "My taken books" %}</a></li>
+								<li><a href="{% url 'my-books2'%}">{% trans "My taken books2" %}</a></li>
+								<li><a href="{% url 'create' %}?next=/library">{% trans "New book" %}</a></li>
+								<li><a href="{% url 'create2' %}?next=/library">{% trans "New book2" %}</a></li>
+								<li><a href="{% url 'logout' %}?next=/library">{% trans "Logout" %}</a></li>
 							{% else %}
-								<li><a href="{% url 'login' %}?next={{request.path}}">Prisijungti</a></li>
-								<li><a href="{% url 'register'%}">Registruotis</a></li>
+								<li><a href="{% url 'login' %}?next={{request.path}}">{% trans "Login" %}</a></li>
+								<li><a href="{% url 'register'%}">{% trans "Register" %}</a></li>
 							{% endif %}
 
 						</ul>
 						<form action="{% url 'search' %}" method="get" class="form-inline my-2 my-md-0">
 							<input name="query" class="form-control" type="text" placeholder="Search">
+						</form>
+						<br>
+						{% load i18n %}
+						<form action="{% url 'set_language' %}" method="post">
+							{% csrf_token %}
+							<input name="next" type="hidden" value="{{ redirect_to }}"/>
+							<select name="language" onchange="this.form.submit()">
+								{% load static %}
+								{% get_current_language as LANGUAGE_CODE %}
+								{% get_available_languages as LANGUAGES %}
+								
+								{% for lang in LANGUAGES %}
+									<option style="background-image: url({% static 'img/lt.png' %});" value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected" {% endif %}>
+										{{ lang.1 }}
+									</option>
+								{% endfor %}
+							</select>
 						</form>
 					{% endblock %}
 				</div>
