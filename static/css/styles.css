@@ -1,0 +1,21 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.book-cover {
+    width: 300px;
+    height: 400px;
+    object-fit: contain;
+}
+
+.box {
+    inline-size: 300px;
+    overflow-wrap: break-word;
+}
+
+.nav-width {
+    object-fit: contain;
+}
+

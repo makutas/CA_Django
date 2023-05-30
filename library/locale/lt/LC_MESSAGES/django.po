@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-30 20:37+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
+
+#: .\models.py:13
+msgid "Name"
+msgstr "Vardas"
+
+#: .\models.py:13
+msgid "Enter type of genre: "
+msgstr "Iveskite žanro tipą:"
+
+#: .\models.py:19
+msgid "Genre"
+msgstr "Žanras"
+
+#: .\models.py:20
+msgid "Genres"
+msgstr "Žanrai"
+
+#: .\models.py:25
+msgid "First name"
+msgstr "Vardas"
+
+#: .\models.py:26
+msgid "Last name"
+msgstr "Pavardė"
+
+#: .\models.py:37
+msgid "Author"
+msgstr "Autorius"
+
+#: .\models.py:38 .\templates\base.html:30 .\templates\index.html:21
+msgid "Authors"
+msgstr "Autoriai"
+
+#: .\models.py:44
+msgid "Title"
+msgstr "Pavadinimas"
+
+#: .\models.py:44
+msgid "Enter book title: "
+msgstr "Įveskite knygos pavadinimą:"
+
+#: .\models.py:45
+msgid "Description"
+msgstr "Apibūdinimas"
+
+#: .\models.py:45
+msgid "Enter short book description: "
+msgstr "Įveskite trumpą knygos aprašymą:"
+
+#: .\models.py:50
+msgid "Enter books genre: "
+msgstr "Įveskite knygos žanrą:"
+
+#: .\models.py:51
+msgid "Cover"
+msgstr "Viršelis"
+
+#: .\models.py:60
+msgid "Book"
+msgstr "Knyga"
+
+#: .\models.py:61 .\templates\base.html:29 .\templates\index.html:18
+msgid "Books"
+msgstr "Knygos"
+
+#: .\templates\base.html:28
+msgid "Home"
+msgstr "Pradžia"
+
+#: .\templates\base.html:32
+msgid "My taken books"
+msgstr "Mano paimtos knygos"
+
+#: .\templates\base.html:33
+msgid "My taken books2"
+msgstr "Mano paimtos knygos2"
+
+#: .\templates\base.html:34
+msgid "New book"
+msgstr "Nauja knyga"
+
+#: .\templates\base.html:35
+msgid "New book2"
+msgstr "Nauja knyga2"
+
+#: .\templates\base.html:36
+msgid "Logout"
+msgstr "Atsijungti"
+
+#: .\templates\base.html:38
+msgid "Login"
+msgstr "Prisijungti"
+
+#: .\templates\base.html:39
+msgid "Register"
+msgstr "Registruotis"
+
+#: .\templates\index.html:7
+msgid "Library"
+msgstr "Biblioteka"
+
+#: .\templates\index.html:10
+msgid "Welcome"
+msgstr "Sveiki atvykę"
+
+#: .\templates\index.html:11
+msgid "Your visits"
+msgstr "Jūsų apsilankymų skaičius"
+
+#: .\templates\index.html:13
+msgid "Welcome to my library!"
+msgstr "Sveiki atvykę į mano biblioteką!"
+
+#: .\templates\index.html:16
+#, fuzzy
+#| msgid "At the moment we have:"
+msgid "At the moment we have"
+msgstr "Šiuo metu turime"
+
+#: .\templates\index.html:19
+msgid "Book instances"
+msgstr "Knygų egzemplioriai"
+
+#: .\templates\index.html:20
+#, fuzzy
+#| msgid "Now available:"
+msgid "Now available"
+msgstr "Šiuo metu turime:"
+
+#: .\views.py:99
+msgid "Password do not match!"
+msgstr "Slaptažodžiai neatitinka!"
+
+#: .\views.py:104
+#, python-brace-format
+msgid "Username \"{username}\" already taken!"
+msgstr "Vartotojas \"{username}\" jau užimtas!"
+
+#: .\views.py:109
+#, python-brace-format
+msgid "Email \"{email}\" already taken!"
+msgstr "El. pašto adresas \"{email}\" jau užimtas!"
+
+#: .\views.py:116
+#, python-brace-format
+msgid "Username \"{username}\" successfully registered!"
+msgstr "Vartotojas \"{username}\" sėkmingai užregistruotas!"
+
+#: .\views.py:130
+msgid "Profile updated..."
+msgstr "Vartotojo profilis sėkmingai atnaujintas..."

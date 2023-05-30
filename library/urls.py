@@ -24,4 +24,6 @@ urlpatterns = [
     path('my_books2/<uuid:pk>', views.user_book, name='my-book2'),
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
+    # TRANSLATE
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

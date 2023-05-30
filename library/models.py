@@ -1,33 +1,30 @@
-from django.db import models
-from django.urls import reverse
-from django_resized import ResizedImageField
-from django.contrib.auth.models import User
 import uuid
 from datetime import date
-from tinymce.models import HTMLField
+from django.db import models
+from django_resized import ResizedImageField
+from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from PIL import Image
+from tinymce.models import HTMLField
 
 
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
-    name = models.CharField('Name', max_length=100, help_text="Enter type of genre: ")
+    name = models.CharField(_('Name'), max_length=100, help_text=_("Enter type of genre: "))
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Genre'
-        verbose_name_plural = 'Genres'
+        verbose_name = _('Genre')
+        verbose_name_plural = _('Genres')
 
 
 class Author(models.Model):
     author_id = models.AutoField(primary_key=True)
-    first_name = models.CharField("First name", max_length=100)
-    last_name = models.CharField("Last name", max_length=100)
+    first_name = models.CharField(_("First name"), max_length=100)
+    last_name = models.CharField(_("Last name"), max_length=100)
     description = HTMLField()
-
-    class Meta:
-        ordering = ['last_name', 'first_name']
 
     def __str__(self):
         return f"{self.first_name} - {self.last_name}"
@@ -35,24 +32,33 @@ class Author(models.Model):
     def display_books(self):
         return ', '.join(book.title for book in self.books.all())
 
+    class Meta:
+        ordering = ['last_name', 'first_name']
+        verbose_name = _('Author')
+        verbose_name_plural = _('Authors')
+
 
 class Book(models.Model):
     book_id = models.AutoField(primary_key=True)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='books')
-    title = models.CharField('Title', max_length=200, help_text="Enter book title: ")
-    description = models.TextField('Description', max_length=1000, help_text="Enter short book description: ")
+    title = models.CharField(_('Title'), max_length=200, help_text=_("Enter book title: "))
+    description = models.TextField(_('Description'), max_length=1000, help_text=_("Enter short book description: "))
     isbn = models.CharField(
         'ISBN', max_length=13,
         help_text='ISBN nr.: <a href="https://www.isbn-international.org/content/what-isbn">ISBN kodas</a>'
     )
-    genre = models.ManyToManyField(Genre, help_text="Enter books genre: ")
-    cover = ResizedImageField('Viršelis', size=[300, 400], upload_to='covers', null=True)
+    genre = models.ManyToManyField(Genre, help_text=_("Enter books genre: "))
+    cover = ResizedImageField(_('Cover'), size=[300, 400], upload_to='covers', null=True)
 
     def __str__(self):
         return self.title
 
     def display_genre(self):
         return ', '.join(genre.name for genre in self.genre.all())
+
+    class Meta:
+        verbose_name = _('Book')
+        verbose_name_plural = _('Books')
 
 
 class BookInstance(models.Model):
